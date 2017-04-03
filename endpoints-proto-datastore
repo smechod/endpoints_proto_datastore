@@ -1,0 +1,15 @@
+@endpoints.method(MyModelMessage, MyModelMessage,
+                  path='mymodel', http_method='POST',
+                  name='mymodel.insert')
+def InsertModel(self, request):
+  my_model = MyModel(attr1=request.attr1, attr2=request.attr2, ...)
+  transformed_model = DoSomething(my_model)
+  return MyModelMessage(attr1=transformed_model.attr1,
+                        attr2=transformed_model.attr2, ...)
+
+we can directly use the entity in the request:
+
+@MyModel.method(path='mymodel', http_method='POST',
+                name='mymodel.insert')
+def InsertModel(self, my_model):
+  return DoSomething(my_model)
